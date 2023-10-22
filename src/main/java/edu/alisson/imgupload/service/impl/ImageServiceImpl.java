@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ImageServiceImpl implements ImageService {
 
@@ -34,5 +37,15 @@ public class ImageServiceImpl implements ImageService {
         } catch (Exception e) {
              throw new Exception("Não foi possível salvar o arquivo " + filename);
         }
+    }
+
+    @Override
+    public List<ImageData> verTodasImagens() {
+        return imageRepository.findAll();
+    }
+
+    @Override
+    public Optional<ImageData> buscarPorId(String idDaImagem) {
+        return imageRepository.findById(idDaImagem);
     }
 }
