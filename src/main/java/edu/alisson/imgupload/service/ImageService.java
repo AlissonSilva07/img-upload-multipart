@@ -5,5 +5,4 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
     ImageData salvarImagem(MultipartFile file) throws Exception;
-    ImageData downloadImagem(String fileId) throws Exception;
 }

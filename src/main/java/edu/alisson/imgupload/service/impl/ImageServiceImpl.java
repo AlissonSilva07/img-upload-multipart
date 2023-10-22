@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ImageServiceImpl implements ImageService {
 
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
     public ImageServiceImpl(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
@@ -32,12 +32,5 @@ public class ImageServiceImpl implements ImageService {
         } catch (Exception e) {
              throw new Exception("Não foi possível salvar o arquivo " + filename);
         }
-    }
-
-    @Override
-    public ImageData downloadImagem(String fileId) throws Exception {
-        return imageRepository
-                .findById(fileId)
-                .orElseThrow(() -> new Exception("O arquivo não foi encontrado com o id " + fileId));
     }
 }
