@@ -3,9 +3,11 @@ package edu.alisson.imgupload.service.impl;
 import edu.alisson.imgupload.entity.ImageData;
 import edu.alisson.imgupload.repository.ImageRepository;
 import edu.alisson.imgupload.service.ImageService;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+@Service
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
