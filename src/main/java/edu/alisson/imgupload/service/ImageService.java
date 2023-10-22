@@ -12,4 +12,6 @@ public interface ImageService {
     List<ImageData> verTodasImagens();
 
     Optional<ImageData> buscarPorId(String idDaImagem);
+
+    ImageData downloadImagem(String idDaImagem) throws Exception;
 }

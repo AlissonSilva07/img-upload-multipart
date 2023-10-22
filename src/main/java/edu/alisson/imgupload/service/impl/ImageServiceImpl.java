@@ -30,7 +30,7 @@ public class ImageServiceImpl implements ImageService {
             ImageData imageData =
                     new ImageData(filename,
                             file.getContentType(),
-                            file.getBytes());
+                            file.getBytes() );
 
             return imageRepository.save(imageData);
 
@@ -47,5 +47,12 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Optional<ImageData> buscarPorId(String idDaImagem) {
         return imageRepository.findById(idDaImagem);
+    }
+
+    @Override
+    public ImageData downloadImagem(String idDaImagem) throws Exception {
+        return imageRepository
+                .findById(idDaImagem)
+                .orElseThrow(() -> new Exception("Não foi possível acahar a imagem com o id " + idDaImagem));
     }
 }
