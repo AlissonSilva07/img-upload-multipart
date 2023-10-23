@@ -30,7 +30,7 @@ public class ImageServiceImpl implements ImageService {
             ImageData imageData =
                     new ImageData(filename,
                             file.getContentType(),
-                            file.getBytes() );
+                            file.getBytes());
 
             return imageRepository.save(imageData);
 

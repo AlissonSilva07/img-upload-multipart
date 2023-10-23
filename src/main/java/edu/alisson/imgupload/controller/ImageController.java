@@ -14,9 +14,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/image-api")
 @CrossOrigin(origins = "*")
 public class ImageController {
     private final ImageService imageService;
@@ -26,8 +26,17 @@ public class ImageController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<List<ImageData>> verTodasImagens() {
-        return ResponseEntity.ok(imageService.verTodasImagens());
+    public ResponseEntity<List<ResponseData>> verTodasImagens() {
+        List<ImageData> imageData = imageService.verTodasImagens();
+        List<ResponseData> responseData = imageData.stream().map(image -> {
+            String downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/img/")
+                    .path(image.getId())
+                    .toUriString();
+            return new ResponseData(image.getFileName(), downloadURL, image.getFileType(), null);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(responseData);
     }
 
     @GetMapping("/view/{fileName}")
@@ -41,14 +50,14 @@ public class ImageController {
         String downloadURL = null;
         imageData = imageService.salvarImagem(file);
         downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
+                .path("/img/")
                 .path(imageData.getId())
                 .toUriString();
 
         return new ResponseData(imageData.getFileName(), downloadURL, file.getContentType(), file.getSize());
     }
 
-    @GetMapping("/download/{fileId}")
+    @GetMapping("/img/{fileId}")
     public ResponseEntity<Resource> downloadImagem(@PathVariable String fileId) throws Exception {
         ImageData imageData = null;
         imageData = imageService.downloadImagem(fileId);
